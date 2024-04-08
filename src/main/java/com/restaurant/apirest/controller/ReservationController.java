@@ -5,11 +5,9 @@ import com.restaurant.apirest.reservation.Reservation;
 import com.restaurant.apirest.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -23,14 +21,14 @@ public class ReservationController {
     private static final Logger logger = Logger.getLogger(ReservationController.class.getName());
 @PostMapping
     public ResponseEntity<Reservation> createReservation (@RequestBody Reservation reservation){
-    logger.info("Llamada al endpoint POST /employee recibida.");
+    logger.info("Llamada al endpoint POST /restaurant recibida.");
          Reservation newReservation = reservationService.createReservation(reservation);
          ApiResponse<Reservation> response = new ApiResponse<>(newReservation, "success", "Reserva creada");
          return ResponseEntity.status(HttpStatus.CREATED).body(response.getData());
 }
 @PutMapping
 public ResponseEntity<ApiResponse<Reservation>> updateReservation(@PathVariable Integer id, @RequestBody Reservation updateReservation) {
-    logger.info("Llamada al endpoint PUT /employee recibida.");
+    logger.info("Llamada al endpoint PUT /restaurant recibida.");
     Reservation updatedReservation = reservationService.updateReservation(id, updateReservation);
     if (updatedReservation != null) {
         ApiResponse<Reservation> response = new ApiResponse<>(updatedReservation, "success", "Reserva modificada satisfactoriamente");
@@ -43,7 +41,7 @@ public ResponseEntity<ApiResponse<Reservation>> updateReservation(@PathVariable 
 
 @GetMapping
 public ResponseEntity<ApiResponse<List<Reservation>>> getAllReservations() {
-    logger.info("Llamada al endpoint GET /employee recibida.");
+    logger.info("Llamada al endpoint GET /restaurant recibida.");
     List<Reservation> reservations = reservationService.getAllReservations();
     ApiResponse<List<Reservation>> response;
     if (!reservations.isEmpty()) {
@@ -57,7 +55,7 @@ public ResponseEntity<ApiResponse<List<Reservation>>> getAllReservations() {
 
     @GetMapping("/por-dia")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> obtenerReservasPorDia() {
-        logger.info("Llamada al endpoint GET /employee recibida.");
+        logger.info("Llamada al endpoint GET /restaurant recibida.");
         List<Object[]> resultados = reservationRepository.obtenerReservasPorDia();
         List<Map<String, Object>> respuesta = new ArrayList<>();
 
@@ -78,7 +76,7 @@ public ResponseEntity<ApiResponse<List<Reservation>>> getAllReservations() {
     }
     @GetMapping("/dias-disponibles")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> obtenerDiasDisponibles() {
-        logger.info("Llamada al endpoint GET /employee recibida.");
+        logger.info("Llamada al endpoint GET /restaurant recibida.");
         List<Object[]> diasDisponibles = reservationRepository.obtenerDiasDisponibles();
         List<Map<String, Object>> respuesta = new ArrayList<>();
 
