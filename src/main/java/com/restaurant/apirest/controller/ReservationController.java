@@ -4,6 +4,7 @@ import com.restaurant.apirest.reservation.ApiResponse;
 import com.restaurant.apirest.reservation.Reservation;
 import com.restaurant.apirest.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,16 +17,18 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 @Validated
 public class ReservationController {
+    @Autowired
     private final ReservationService reservationService;
     private final ReservationRepository reservationRepository;
     private static final Logger logger = Logger.getLogger(ReservationController.class.getName());
-@PostMapping
-    public ResponseEntity<Reservation> createReservation (@RequestBody Reservation reservation){
-    logger.info("Llamada al endpoint POST /restaurant recibida.");
-         Reservation newReservation = reservationService.createReservation(reservation);
-         ApiResponse<Reservation> response = new ApiResponse<>(newReservation, "success", "Reserva creada");
-         return ResponseEntity.status(HttpStatus.CREATED).body(response.getData());
-}
+    @PostMapping
+    public ResponseEntity<ApiResponse<Reservation>> createReservation (@RequestBody Reservation reservation){
+        logger.info("Llamada al endpoint POST /restaurant recibida.");
+        Reservation newReservation = reservationService.createReservation(reservation);
+        ApiResponse<Reservation> response = new ApiResponse<>(newReservation, "success", "Reserva creada");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
 @PutMapping
 public ResponseEntity<ApiResponse<Reservation>> updateReservation(@PathVariable Integer id, @RequestBody Reservation updateReservation) {
     logger.info("Llamada al endpoint PUT /restaurant recibida.");

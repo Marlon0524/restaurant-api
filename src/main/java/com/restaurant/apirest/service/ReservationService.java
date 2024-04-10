@@ -4,6 +4,7 @@ import com.restaurant.apirest.repository.ReservationRepository;
 import com.restaurant.apirest.reservation.Reservation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
+    @Autowired
  private final ReservationRepository reservationRepository;
 
  public Reservation createReservation (Reservation reservation){

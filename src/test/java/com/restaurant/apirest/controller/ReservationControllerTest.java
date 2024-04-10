@@ -43,7 +43,7 @@ class ReservationControllerTest {
 
         when(reservationService.createReservation(reservation)).thenReturn(reservation);
 
-        ResponseEntity<Reservation> response = reservationController.createReservation(reservation);
+        ResponseEntity<ApiResponse<Reservation>> response = reservationController.createReservation(reservation);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(reservation, response.getBody());
